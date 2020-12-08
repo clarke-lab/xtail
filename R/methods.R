@@ -1,8 +1,8 @@
 print.xtailResults <- function(){print ("xtailResults")}
 
 dispersionMatrix.DESeqDataSet <- function(object){
-  if (!"dispersionMatrix" %in% names(assays(object))) return (NULL)
-  disp <- assays(object)[["dispersionMatrix"]]
+  if (!"dispersionMatrix" %in% names(assays(object, withDimnames = F))) return (NULL)
+  disp <- assays(object, withDimnames = F)[["dispersionMatrix"]]
   colnames(disp) <- colnames(object)
   disp
 }
@@ -16,7 +16,7 @@ setMethod("dispersionMatrix", signature(object="DESeqDataSet"),
 #' @exportMethod "dispersions<-"
 setReplaceMethod("dispersionMatrix", signature(object="DESeqDataSet", value="matrix"),
                  function(object, value) {
-                  assays(object)[["dispersionMatrix"]] <- value
+                  assays(object,withDimnames = FALSE)[["dispersionMatrix"]] <- value
                   validObject( object )
                   object
                  })
